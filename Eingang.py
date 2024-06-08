@@ -16,12 +16,12 @@ class Eingang(TemplateRoom):
         self.offset_balloon_width = 180
         self.offset_balloon_length = 800
 
-        self.set_offset_mouth(787, 271, 50, 150)
+        self.set_offset_mouth(1292, 411, 50, 150)
 
-        self.hitbox_door_1 = QRect(15, 12, 600, 1000)
+        self.hitbox_door_1 = QRect(15, 12, 600, 1200)
         self.append_hitbox(self.hitbox_door_1)
 
-        self.hitbox_door_2 = QRect(1150, 215, 275, 600)
+        self.hitbox_door_2 = QRect(2040, 94, 600, 1200)
         self.append_hitbox(self.hitbox_door_2)
 
         self.hitbox_forward = QRect(1135, 146, 100, 25)

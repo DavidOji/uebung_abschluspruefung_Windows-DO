@@ -9,15 +9,18 @@ class Aula(TemplateRoom):
 
         self.init_room("Aula.jpg")
 
-        self.offset_balloon_x = int((1440-500)/2)
-        self.offset_balloon_y = 25
+        self.offset_balloon_x = 1011
+        self.offset_balloon_y = 46
+        self.offset_balloon_width = 180
+        self.offset_balloon_length = 800
+
         self.set_offset_mouth(self.offset_balloon_x + self.offset_balloon_length, self.offset_balloon_y +
                               self.offset_balloon_width, 0, 0)
 
-        self.hitbox_zurVerwaltung = QRect(1, 1, 250, 800)
+        self.hitbox_zurVerwaltung = QRect(1, 1, 600, 1200)
         self.append_hitbox(self.hitbox_zurVerwaltung)
 
-        self.hitbox_zumTestRaum = QRect(1150, 215, 275, 600)
+        self.hitbox_zumTestRaum = QRect(2066, 34, 600, 1200)
         self.append_hitbox(self.hitbox_zumTestRaum)
 
 
