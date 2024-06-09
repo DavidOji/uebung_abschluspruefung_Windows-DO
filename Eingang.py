@@ -1,23 +1,30 @@
 from PyQt6.QtCore import QRect, Qt
 from PyQt6.QtGui import QMouseEvent, QPainter
 
+# Importieren der TemplateRoom-Klasse
 from TemplateRoom import TemplateRoom
 
-
+# Definition der Eingang-Klasse, die von TemplateRoom erbt
 class Eingang(TemplateRoom):
     def __init__(self, parent=None):
+        # Aufruf des Konstruktors der Elternklasse
         super(Eingang, self).__init__(parent)
+        # Deaktivieren des Exit-Buttons
         self.show_exit_button(False)
 
+        # Initialisieren des Raumes mit dem Bild "Eingang.jpg"
         self.init_room("Eingang.jpg")
 
+        # Setzen der Position und Größe der Sprechblase
         self.offset_balloon_x = 641
         self.offset_balloon_y = 16
         self.offset_balloon_width = 180
         self.offset_balloon_length = 800
 
+        # Setzen der Position und Größe des Mundes zur Sprechblase
         self.set_offset_mouth(1292, 411, 50, 150)
 
+        # Initialisieren der Hitboxen für die Türen und das Vorwärtsgehen
         self.hitbox_door_1 = QRect(15, 12, 600, 1200)
         self.append_hitbox(self.hitbox_door_1)
 
@@ -27,10 +34,11 @@ class Eingang(TemplateRoom):
         self.hitbox_forward = QRect(1135, 146, 100, 25)
         self.append_hitbox(self.hitbox_forward)
 
+        # Initialisieren der Hitbox für das Easter Egg
         self.__counter = 0
-
         self.hitbox_easter_egg = QRect(740, 410, 35, 35)
 
+        # Setzen der Anfangstexte der Sprechblase
         self.text_line_1 = ""
         self.text_line_2 = "Hallo und herzlich willkommen,"
         self.text_line_3 = "zum Tag der offenen Tür am 16. März 2024"
@@ -38,12 +46,15 @@ class Eingang(TemplateRoom):
         self.text_line_5 = ""
         self.text_line_6 = "                         weiter"
 
-
+    # Überschreiben des mousePressEvent, um auf Mausklicks zu reagieren
     def mousePressEvent(self, ev: QMouseEvent) -> None:
+        # Aufruf der mousePressEvent-Methode der Elternklasse
         super(Eingang, self).mousePressEvent(ev)
 
+        # Erfassen der aktuellen Mausposition
         mouse_pos = ev.pos()
 
+        # Überprüfen, ob das Easter Egg angeklickt wurde
         if self.hitbox_easter_egg.contains(mouse_pos):
             self.text_line_1 = ""
             self.text_line_2 = ""
@@ -52,20 +63,18 @@ class Eingang(TemplateRoom):
             self.text_line_5 = ""
             self.text_line_6 = ""
 
+            # Abspielen des Sounds
             self.play_sound("TemplateRoom.mp3")
 
+            # Aktualisieren des Widgets
             self.update()
 
-        if self.hitbox_door_1.contains(mouse_pos):
+        # Überprüfen, ob eine der Türen angeklickt wurde
+        if self.hitbox_door_1.contains(mouse_pos) or self.hitbox_door_2.contains(mouse_pos):
             self.stop_player()
-
             self.new_room.emit("Aula.jpg")
 
-        if self.hitbox_door_2.contains(mouse_pos):
-            self.stop_player()
-
-            self.new_room.emit("Aula.jpg")
-
+        # Überprüfen, ob der Vorwärts-Button angeklickt wurde
         if self.hitbox_forward.contains(mouse_pos):
             if self.__counter == 0:
                 self.text_line_1 = ""
@@ -123,7 +132,7 @@ class Eingang(TemplateRoom):
                 self.text_line_3 = "Besuche jede Raum"
                 self.text_line_4 = "und finde die Tassen!."
                 self.text_line_5 = ""
-                self.text_line_6 ="                         weiter"
+                self.text_line_6 = "                         weiter"
 
                 self.__counter = 6
 
@@ -135,4 +144,5 @@ class Eingang(TemplateRoom):
                 self.text_line_5 = ""
                 self.text_line_6 = ""
 
+            # Aktualisieren des Widgets nach dem Ändern des Textes
             self.update()
